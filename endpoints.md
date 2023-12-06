@@ -18,7 +18,6 @@
 | `/getAnimalVaccines/update`      | PUT    | Update animal vaccine record            |
 | `/getAnimalVaccines/delete/{id}` | DELETE | Delete animal vaccine record            |
 
-...
 ## Customer
 | Endpoint                | Method | Description            |
 |-------------------------|--------|------------------------|
@@ -56,7 +55,6 @@
 | `/vaccines/add`          | POST   | Add new vaccine    |
 | `/vaccines/update`       | PUT    | Update vaccine record |
 | `/vaccines/delete/{id}`  | DELETE | Delete vaccine record |
-...
 ## Appointment
 | Endpoint                             | Method | Description                                           |
 |--------------------------------------|--------|-------------------------------------------------------|
@@ -67,7 +65,6 @@
 | `/appointments/add"`                 | POST   | Add new appointment                                   |
 | `/appointments/update"`              | PUT    | Update appointment record                             |
 | `/appointments/delete/{id}"`         | DELETE | Delete appointment record                             |
-...
 
 
 
