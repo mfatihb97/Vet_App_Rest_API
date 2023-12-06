@@ -29,15 +29,15 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
     }
 
 
-    @SneakyThrows
+
     @Override
     public AnimalVaccine save(AnimalVaccine animalVaccine) {
        Long animalID = animalVaccine.getAnimal().getId();
        Long vaccineID = animalVaccine.getVaccine().getId();
-
        AnimalVaccine oldVaccine = animalVaccineRepository.findByAnimalIdAndVaccineId(animalID,vaccineID);
+
        if (oldVaccine != null && oldVaccine.getPrtEnd().isAfter(animalVaccine.getPrtStart())){
-           throw  new IllegalStateException("Protection of this vaccine remains on the animal!");
+           throw  new ResponseStatusException(HttpStatus.CONFLICT);
        }
 
        return animalVaccineRepository.save(animalVaccine);
