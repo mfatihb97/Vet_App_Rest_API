@@ -1,0 +1,1 @@
+![vet_app_schema.png](..%2F..%2F..%2FPatika-Full%20Stack%20Web%20Developer%2Fvet_app_schema.png)
