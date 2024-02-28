@@ -33,4 +33,8 @@ public class Appointment {
     @JoinColumn(name = "doctor_id",referencedColumnName = "id",nullable = false)
     private Doctor doctor;
 
+    @OneToOne(mappedBy = "appointment")
+    private Report report;
+
+
 }

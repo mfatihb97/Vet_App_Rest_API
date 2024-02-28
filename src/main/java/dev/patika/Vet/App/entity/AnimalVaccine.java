@@ -1,12 +1,14 @@
 package dev.patika.Vet.App.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +38,7 @@ public class AnimalVaccine {
     @JoinColumn(name = "vaccine_id",referencedColumnName = "id")
     private Vaccine vaccine;
 
+    @OneToMany(mappedBy = "animalVaccine")
+    @JsonIgnore
+    private List<Report> reportList;
 }

@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VaccinesRepository extends JpaRepository<Vaccine,Integer> {
-
     Vaccine findById(long id);
 }

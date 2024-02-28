@@ -11,6 +11,5 @@ import java.util.List;
 public interface AnimalVaccineRepository extends JpaRepository<AnimalVaccine,Integer> {
     AnimalVaccine findByAnimalIdAndVaccineId(Long animal_id,Long vaccine_id);
     List<AnimalVaccine> findAllByPrtStartBetween(LocalDate prt_start, LocalDate prt_end);
-
     AnimalVaccine findById(long id);
 }

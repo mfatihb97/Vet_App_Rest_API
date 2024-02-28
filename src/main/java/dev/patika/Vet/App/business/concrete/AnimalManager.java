@@ -53,7 +53,7 @@ public class AnimalManager implements IAnimalService {
             existingAnimal.setGender(animal.getGender());
             existingAnimal.setName(animal.getName());
             existingAnimal.setSpecies(animal.getSpecies());
-            return animalRepository.save(animal);
+            return animalRepository.save(existingAnimal);
         }
 
     }

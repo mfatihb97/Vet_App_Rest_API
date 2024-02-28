@@ -47,7 +47,7 @@ public class AppointmentController {
     public List<Appointment> listApoByDoctorIdBetween(
             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate endDate,
-            @RequestParam("animalId") long id){
+            @RequestParam("doctorId") long id){
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23,59,59);
         return appointmentService.findByDoctorIdBetweenDates(startDateTime,endDateTime,id);
