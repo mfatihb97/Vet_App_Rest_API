@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IAppointmentService {
-    Appointment getByID(long id);
+    Appointment getByID(Long id);
     Appointment save(Appointment appointment);
     String delete(long id);
     Appointment update(Appointment appointment);

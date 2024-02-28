@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface IAnimalVaccineService {
-    AnimalVaccine getByID(int id);
+    AnimalVaccine getByID(Long id);
     AnimalVaccine save(AnimalVaccine animalVaccine);
-    String delete(int id);
+    String delete(Long id);
     AnimalVaccine update(AnimalVaccine animalVaccine);
     List<AnimalVaccine> findAll();
-    List<AnimalVaccine> findAnimalVaccineByAnimalID(int id);
+    List<AnimalVaccine> findAnimalVaccineByAnimalID(Long id);
     List<AnimalVaccine> findAllByPrtStartBetween(LocalDate prt_start, LocalDate prt_end);
 
 }

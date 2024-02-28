@@ -24,7 +24,7 @@ public class VaccineController {
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Vaccine finByID(@PathVariable("id") int id){
+    public Vaccine finByID(@PathVariable("id") Long id){
         return this.vaccinesService.getByID(id);
     }
 
@@ -41,7 +41,7 @@ public class VaccineController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("id") long id){
-        return this.vaccinesService.delete((int) id);
+    public String delete(@PathVariable("id") Long id){
+        return this.vaccinesService.delete(id);
     }
 }

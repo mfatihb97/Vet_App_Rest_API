@@ -3,6 +3,8 @@ package dev.patika.Vet.App.business.concrete;
 import dev.patika.Vet.App.business.abs.IAnimalService;
 import dev.patika.Vet.App.dao.AnimalRepository;
 import dev.patika.Vet.App.entity.Animal;
+import dev.patika.Vet.App.entity.AnimalVaccine;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,16 +13,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AnimalManager implements IAnimalService {
-    @Autowired
-    private AnimalRepository animalRepository;
+
+    private final AnimalRepository animalRepository;
 
     @Override
-    public Animal getByID(int id) {
+    public Animal getByID(Long id) {
         if (this.animalRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Id yok");
         } else {
-            return this.animalRepository.findById(id);
+            return this.animalRepository.findById(id).orElseThrow();
         }
 
     }
@@ -31,7 +34,7 @@ public class AnimalManager implements IAnimalService {
     }
 
     @Override
-    public String delete(int id) {
+    public String delete(Long id) {
         if (this.animalRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
@@ -43,7 +46,7 @@ public class AnimalManager implements IAnimalService {
 
     @Override
     public Animal update(Animal animal) {
-        Animal existingAnimal = animalRepository.findById(animal.getId());
+        Animal existingAnimal = animalRepository.findById(animal.getId()).orElseThrow();
         if (existingAnimal == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else{

@@ -24,7 +24,7 @@ public class CustomerController {
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Customer finByID(@PathVariable("id") int id){
+    public Customer finByID(@PathVariable("id") Long id){
         return this.customerService.getByID(id);
     }
 
@@ -36,7 +36,7 @@ public class CustomerController {
 
     @GetMapping("/getPets/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Animal> getPets(@PathVariable("id") int id){
+    public List<Animal> getPets(@PathVariable("id") Long id){
         return customerService.findAnimalByCustomerID(id);
     }
 
@@ -54,6 +54,6 @@ public class CustomerController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id){
-        return this.customerService.delete((int) id);
+        return this.customerService.delete(id);
     }
 }

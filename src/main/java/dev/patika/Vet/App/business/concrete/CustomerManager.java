@@ -18,11 +18,11 @@ public class CustomerManager implements ICustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     @Override
-    public Customer getByID(int id) {
+    public Customer getByID(Long id) {
         if (this.customerRepository.findById(id)==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            return this.customerRepository.findById(id);
+            return this.customerRepository.findById(id).orElseThrow();
         }
     }
 
@@ -32,7 +32,7 @@ public class CustomerManager implements ICustomerService {
     }
 
     @Override
-    public String delete(int id) {
+    public String delete(Long id) {
         if (this.customerRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
@@ -43,7 +43,7 @@ public class CustomerManager implements ICustomerService {
 
     @Override
     public Customer update(Customer customer) {
-        Customer existingCustomer = customerRepository.findById((int) customer.getId());
+        Customer existingCustomer = customerRepository.findById(customer.getId()).orElseThrow();
         if (existingCustomer==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
@@ -68,8 +68,8 @@ public class CustomerManager implements ICustomerService {
     }
 
     @Override
-    public List<Animal> findAnimalByCustomerID(int id) {
-        Customer customer = customerRepository.findById(id);
+    public List<Animal> findAnimalByCustomerID(Long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow();
         if (customer!=null){
             return customer.getAnimalList();
         }else {

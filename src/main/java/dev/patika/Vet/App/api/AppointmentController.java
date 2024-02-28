@@ -26,7 +26,7 @@ public class AppointmentController {
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Appointment finByID(@PathVariable("id") int id) {
+    public Appointment finByID(@PathVariable("id") Long id) {
         return this.appointmentService.getByID(id);
     }
 

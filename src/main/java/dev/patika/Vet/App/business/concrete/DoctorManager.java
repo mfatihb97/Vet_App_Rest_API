@@ -16,11 +16,11 @@ public class DoctorManager implements IDoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
     @Override
-    public Doctor getByID(long id) {
+    public Doctor getByID(Long id) {
         if (this.doctorRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
-            return this.doctorRepository.findById(id);
+            return this.doctorRepository.findById(id).orElseThrow();
         }
     }
 
@@ -30,7 +30,7 @@ public class DoctorManager implements IDoctorService {
     }
 
     @Override
-    public String delete(long id) {
+    public String delete(Long id) {
         if (this.doctorRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
@@ -41,7 +41,7 @@ public class DoctorManager implements IDoctorService {
 
     @Override
     public Doctor update(Doctor doctor) {
-        Doctor existingDoctor = doctorRepository.findById(doctor.getId());
+        Doctor existingDoctor = doctorRepository.findById(doctor.getId()).orElseThrow();
         if (existingDoctor==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

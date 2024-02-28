@@ -17,12 +17,12 @@ public class DoctorAvailabilityManager implements IDoctorAvailabilityService {
     private DoctorAvailabilityRepository doctorAvailabilityRepository;
 
     @Override
-    public DoctorAvailability getByID(long id) {
+    public DoctorAvailability getByID(Long id) {
 
         if (this.doctorAvailabilityRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
-            return this.doctorAvailabilityRepository.findById(id);
+            return this.doctorAvailabilityRepository.findById(id).orElseThrow();
         }
     }
 
@@ -32,7 +32,7 @@ public class DoctorAvailabilityManager implements IDoctorAvailabilityService {
     }
 
     @Override
-    public String delete(long id) {
+    public String delete(Long id) {
         if (this.doctorAvailabilityRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
@@ -43,7 +43,7 @@ public class DoctorAvailabilityManager implements IDoctorAvailabilityService {
 
     @Override
     public DoctorAvailability update(DoctorAvailability doctorAvailability) {
-        DoctorAvailability existingDoctorAv = doctorAvailabilityRepository.findById(doctorAvailability.getId());
+        DoctorAvailability existingDoctorAv = doctorAvailabilityRepository.findById(doctorAvailability.getId()).orElseThrow();
         if (existingDoctorAv==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

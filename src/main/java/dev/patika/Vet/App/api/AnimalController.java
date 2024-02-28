@@ -22,7 +22,7 @@ public class AnimalController {
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Animal getById(@PathVariable("id") int id){
+    public Animal getById(@PathVariable("id")Long id){
         return this.animalService.getByID(id);
     }
 
@@ -42,7 +42,7 @@ public class AnimalController {
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") long id){
-        return this.animalService.delete((int) id);
+        return this.animalService.delete(id);
     }
 
 

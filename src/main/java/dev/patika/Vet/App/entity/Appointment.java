@@ -1,6 +1,9 @@
 package dev.patika.Vet.App.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +21,7 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "appointmentDate",nullable = false)
@@ -33,7 +36,8 @@ public class Appointment {
     @JoinColumn(name = "doctor_id",referencedColumnName = "id",nullable = false)
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "appointment")
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JsonBackReference
     private Report report;
 
 

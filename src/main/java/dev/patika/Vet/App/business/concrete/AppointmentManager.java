@@ -22,11 +22,11 @@ public class AppointmentManager implements IAppointmentService {
     @Autowired
     private DoctorAvailabilityRepository doctorAvailabilityRepository;
     @Override
-    public Appointment getByID(long id) {
+    public Appointment getByID(Long id) {
         if (this.appointmentRepository.findById(id)==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            return this.appointmentRepository.findById(id);
+            return this.appointmentRepository.findById(id).orElseThrow();
         }
     }
 
@@ -38,7 +38,6 @@ public class AppointmentManager implements IAppointmentService {
 
         if (availableDate != null && isApointmentExistsOnDate(doctorID,appointmentDate)){
              throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            //throw new IllegalStateException("Doctor is not available!");
         }else {
             return this.appointmentRepository.save(appointment);
         }
@@ -56,7 +55,7 @@ public class AppointmentManager implements IAppointmentService {
 
     @Override
     public Appointment update(Appointment appointment) {
-        Appointment existingAppointment = appointmentRepository.findById(appointment.getId());
+        Appointment existingAppointment = appointmentRepository.findById(appointment.getId()).orElseThrow();
         if (existingAppointment==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

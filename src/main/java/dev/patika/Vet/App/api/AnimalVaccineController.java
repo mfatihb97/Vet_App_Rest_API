@@ -26,17 +26,17 @@ public class AnimalVaccineController {
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AnimalVaccine finByID(@PathVariable("id") int id) {
+    public AnimalVaccine finByID(@PathVariable("id") Long id) {
         return this.animalVaccineService.getByID(id);
     }
 
     @GetMapping("/getAnimalVaccines/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<AnimalVaccine> getAnimalVaccines(@PathVariable("id") int id) {
+    public List<AnimalVaccine> getAnimalVaccines(@PathVariable("id") Long id) {
         return animalVaccineService.findAnimalVaccineByAnimalID(id);
     }
 
-    @GetMapping("/getBetween") //http://localhost:7171/animalVaccines/getBetween?startDate=2023-01-01&endDate=2024-01-01
+    @GetMapping("/getBetween")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<AnimalVaccine>> getAnimalVaccinesBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -61,7 +61,7 @@ public class AnimalVaccineController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("id") long id) {
-        return this.animalVaccineService.delete((int) id);
+    public String delete(@PathVariable("id") Long id) {
+        return this.animalVaccineService.delete(id);
     }
 }

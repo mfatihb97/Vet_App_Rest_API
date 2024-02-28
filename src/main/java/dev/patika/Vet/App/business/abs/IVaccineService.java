@@ -5,9 +5,9 @@ import dev.patika.Vet.App.entity.Vaccine;
 import java.util.List;
 
 public interface IVaccineService {
-    Vaccine getByID(int id);
+    Vaccine getByID(Long id);
     Vaccine save(Vaccine vaccine);
-    String delete(int id);
+    String delete(Long id);
     Vaccine update(Vaccine vaccine);
     List<Vaccine> findAll();
 }

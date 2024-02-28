@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IDoctorService {
 
-    Doctor getByID(long id);
+    Doctor getByID(Long id);
     Doctor save(Doctor doctor);
-    String delete(long id);
+    String delete(Long id);
     Doctor update(Doctor doctor);
     List<Doctor> findAll();
 }

@@ -2,6 +2,8 @@ package dev.patika.Vet.App.business.concrete;
 
 import dev.patika.Vet.App.business.abs.IReportService;
 import dev.patika.Vet.App.dao.ReportRepository;
+import dev.patika.Vet.App.dto.ReportDto.ReportSaveReqMapper;
+import dev.patika.Vet.App.dto.ReportDto.ReportSaveRequest;
 import dev.patika.Vet.App.entity.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,22 +17,26 @@ public class ReportManager implements IReportService {
     @Autowired
     private ReportRepository reportRepository;
 
+    @Autowired
+    private ReportSaveReqMapper reportSaveReqMapper;
+
     @Override
-    public Report getByID(int id) {
+    public Report getByID(Long id) {
         if (this.reportRepository.findById(id) == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Id yok");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id yok");
         } else {
-            return this.reportRepository.findById(id);
+            return this.reportRepository.findById(id).orElseThrow();
         }
 
     }
+
     @Override
-    public Report save(Report report) {
-        return this.reportRepository.save(report);
+    public Report save(ReportSaveRequest report) {
+        return this.reportSaveReqMapper.apply(report);
     }
 
     @Override
-    public String delete(int id) {
+    public String delete(Long id) {
         if (this.reportRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
@@ -41,16 +47,14 @@ public class ReportManager implements IReportService {
     }
 
     @Override
-    public Report update(Report report) {
-        Report existingReport = reportRepository.findById(report.getId());
-        if (existingReport == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }else{
-            existingReport.setTitle(report.getTitle());
-            existingReport.setPrice(report.getPrice());
-            existingReport.setDiagnosis(report.getDiagnosis());
-            return reportRepository.save(existingReport);
-        }
+    public Report update(ReportSaveRequest reportSaveRequest, Long id) {
+        Report existingReport = reportRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        existingReport.setTitle(reportSaveRequest.title());
+        existingReport.setPrice(reportSaveRequest.price());
+        existingReport.setDiagnosis(reportSaveRequest.diagnosis());
+        return reportRepository.save(existingReport);
 
     }
 

@@ -20,11 +20,11 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
     private AnimalVaccineRepository animalVaccineRepository;
 
     @Override
-    public AnimalVaccine getByID(int id) {
+    public AnimalVaccine getByID(Long id) {
         if (this.animalVaccineRepository.findById(id)==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            return this.animalVaccineRepository.findById(id);
+            return this.animalVaccineRepository.findById(id).orElseThrow();
         }
     }
 
@@ -44,7 +44,7 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
     }
 
     @Override
-    public String delete(int id) {
+    public String delete(Long id) {
         if (this.animalVaccineRepository.findById(id)==null){
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
@@ -55,7 +55,7 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
 
     @Override
     public AnimalVaccine update(AnimalVaccine animalVaccine) {
-        AnimalVaccine existingAnimalVaccine = animalVaccineRepository.findById((int) animalVaccine.getId());
+        AnimalVaccine existingAnimalVaccine = animalVaccineRepository.findById(animalVaccine.getId()).orElseThrow();
         if (existingAnimalVaccine == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
@@ -72,8 +72,8 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
     }
 
     @Override
-    public List<AnimalVaccine> findAnimalVaccineByAnimalID(int id) {
-        AnimalVaccine animalVaccine = animalVaccineRepository.findById(id);
+    public List<AnimalVaccine> findAnimalVaccineByAnimalID(Long id) {
+        AnimalVaccine animalVaccine = animalVaccineRepository.findById(id).orElseThrow();
         if (animalVaccine!=null){
             return animalVaccine.getAnimal().getAnimalVaccineList();
         }else {

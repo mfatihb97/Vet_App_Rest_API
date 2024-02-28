@@ -23,7 +23,7 @@ public class DoctorAvailabilityController {
 
     @GetMapping("/getById/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DoctorAvailability finByID(@PathVariable("id") int id) {
+    public DoctorAvailability finByID(@PathVariable("id") Long id) {
         return this.doctorAvailabilityService.getByID(id);
     }
 

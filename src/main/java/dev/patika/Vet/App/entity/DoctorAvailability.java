@@ -18,7 +18,7 @@ public class DoctorAvailability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "availableDays",nullable = false)

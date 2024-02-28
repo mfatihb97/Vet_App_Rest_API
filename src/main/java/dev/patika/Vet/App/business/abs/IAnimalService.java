@@ -5,9 +5,9 @@ import dev.patika.Vet.App.entity.Animal;
 import java.util.List;
 
 public interface IAnimalService {
-    Animal getByID(int id);
+    Animal getByID(Long id);
     Animal save(Animal animal);
-    String delete(int id);
+    String delete(Long id);
     Animal update(Animal animal);
     List<Animal> findAll();
 }

@@ -16,11 +16,11 @@ public class VaccinesManager implements IVaccineService {
     @Autowired
     private VaccinesRepository vaccinesRepository;
     @Override
-    public Vaccine getByID(int id) {
+    public Vaccine getByID(Long id) {
         if (this.vaccinesRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
-            return this.vaccinesRepository.findById(id);
+            return this.vaccinesRepository.findById(id).orElseThrow();
         }
     }
 
@@ -30,7 +30,7 @@ public class VaccinesManager implements IVaccineService {
     }
 
     @Override
-    public String delete(int id) {
+    public String delete(Long id) {
         if (this.vaccinesRepository.findById(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
@@ -41,7 +41,7 @@ public class VaccinesManager implements IVaccineService {
 
     @Override
     public Vaccine update(Vaccine vaccines) {
-        Vaccine existingVaccine = vaccinesRepository.findById((int) vaccines.getId());
+        Vaccine existingVaccine = vaccinesRepository.findById(vaccines.getId()).orElseThrow();
         if (existingVaccine==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

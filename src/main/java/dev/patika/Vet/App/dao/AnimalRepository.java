@@ -5,6 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AnimalRepository extends JpaRepository<Animal,Integer> {
-      Animal findById(long id);
+public interface AnimalRepository extends JpaRepository<Animal,Long> {
 }
