@@ -2,6 +2,7 @@ package dev.patika.Vet.App.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -23,6 +24,7 @@ public class Appointment {
     @Column(name = "id")
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "appointmentDate",nullable = false)
     private LocalDateTime appointmentDate;

@@ -1,11 +1,11 @@
 package dev.patika.Vet.App.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 @Data
@@ -21,6 +21,7 @@ public class DoctorAvailability {
     private Long id;
 
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "availableDays",nullable = false)
     private LocalDate availableDays;
 
