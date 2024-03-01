@@ -54,9 +54,11 @@ public class AnimalVaccineController {
         return this.animalVaccineService.save(animalVaccine);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AnimalVaccine update(@RequestBody AnimalVaccine animalVaccine) {
+    public AnimalVaccine update(
+            @PathVariable("id") Long id,
+            @RequestBody AnimalVaccine animalVaccine) {
         return animalVaccineService.save(animalVaccine);
     }
 

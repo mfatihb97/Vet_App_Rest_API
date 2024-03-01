@@ -59,9 +59,11 @@ public class AppointmentController {
         return this.appointmentService.save(appointment);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Appointment update(@RequestBody Appointment appointment) {
+    public Appointment update(
+            @PathVariable("id") Long id,
+            @RequestBody Appointment appointment) {
         return appointmentService.save(appointment);
     }
 

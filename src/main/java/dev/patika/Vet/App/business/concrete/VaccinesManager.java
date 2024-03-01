@@ -40,8 +40,8 @@ public class VaccinesManager implements IVaccineService {
     }
 
     @Override
-    public Vaccine update(Vaccine vaccines) {
-        Vaccine existingVaccine = vaccinesRepository.findById(vaccines.getId()).orElseThrow();
+    public Vaccine update(Vaccine vaccines,Long id) {
+        Vaccine existingVaccine = vaccinesRepository.findById(id).orElseThrow();
         if (existingVaccine==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

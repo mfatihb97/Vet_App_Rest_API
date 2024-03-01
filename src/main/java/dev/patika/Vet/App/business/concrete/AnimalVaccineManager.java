@@ -54,8 +54,8 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
     }
 
     @Override
-    public AnimalVaccine update(AnimalVaccine animalVaccine) {
-        AnimalVaccine existingAnimalVaccine = animalVaccineRepository.findById(animalVaccine.getId()).orElseThrow();
+    public AnimalVaccine update(AnimalVaccine animalVaccine,Long id) {
+        AnimalVaccine existingAnimalVaccine = animalVaccineRepository.findById(id).orElseThrow();
         if (existingAnimalVaccine == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

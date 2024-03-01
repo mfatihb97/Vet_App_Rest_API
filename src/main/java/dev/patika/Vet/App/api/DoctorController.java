@@ -33,9 +33,11 @@ public class DoctorController {
         return this.doctorService.save(doctor);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Doctor update(@RequestBody Doctor doctor) {
+    public Doctor update(
+            @PathVariable("id") Long id,
+            @RequestBody Doctor doctor) {
         return doctorService.save(doctor);
     }
 

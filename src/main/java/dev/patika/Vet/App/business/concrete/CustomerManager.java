@@ -42,8 +42,8 @@ public class CustomerManager implements ICustomerService {
     }
 
     @Override
-    public Customer update(Customer customer) {
-        Customer existingCustomer = customerRepository.findById(customer.getId()).orElseThrow();
+    public Customer update(Customer customer,Long id) {
+        Customer existingCustomer = customerRepository.findById(id).orElseThrow();
         if (existingCustomer==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

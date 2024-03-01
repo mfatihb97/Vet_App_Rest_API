@@ -46,9 +46,11 @@ public class CustomerController {
         return this.customerService.save(customer);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Customer update(@RequestBody Customer customer){
+    public Customer update(
+            @PathVariable("id") Long id,
+            @RequestBody Customer customer){
         return customerService.save(customer);
     }
 

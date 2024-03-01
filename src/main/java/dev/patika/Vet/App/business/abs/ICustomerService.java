@@ -9,7 +9,7 @@ public interface ICustomerService {
     Customer getByID(Long id);
     Customer save(Customer customer);
     String delete(Long id);
-    Customer update(Customer customer);
+    Customer update(Customer customer,Long id);
     List<Customer> findAll();
     Customer findByName(String name);
 

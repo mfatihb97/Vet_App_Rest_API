@@ -45,8 +45,8 @@ public class AnimalManager implements IAnimalService {
     }
 
     @Override
-    public Animal update(Animal animal) {
-        Animal existingAnimal = animalRepository.findById(animal.getId()).orElseThrow();
+    public Animal update(Animal animal,Long id) {
+        Animal existingAnimal = animalRepository.findById(id).orElseThrow();
         if (existingAnimal == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else{

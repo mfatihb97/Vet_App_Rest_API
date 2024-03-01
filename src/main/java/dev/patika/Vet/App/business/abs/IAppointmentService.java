@@ -9,7 +9,7 @@ public interface IAppointmentService {
     Appointment getByID(Long id);
     Appointment save(Appointment appointment);
     String delete(long id);
-    Appointment update(Appointment appointment);
+    Appointment update(Appointment appointment,Long id);
 
     List<Appointment> findAll();
 

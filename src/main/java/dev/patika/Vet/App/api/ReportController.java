@@ -41,7 +41,6 @@ public class ReportController {
     public Report update(
             @PathVariable("id") Long id,
             @RequestBody ReportSaveRequest reportSaveRequest){
-
         return reportService.update(reportSaveRequest,id);
     }
 

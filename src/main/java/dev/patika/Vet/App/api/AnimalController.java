@@ -32,11 +32,11 @@ public class AnimalController {
         return this.animalService.save(animal);
     }
 
-
-
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Animal update(@RequestBody Animal animal){
+    public Animal update(
+            @PathVariable("id") Long id,
+            @RequestBody Animal animal){
         return animalService.save(animal);
     }
 

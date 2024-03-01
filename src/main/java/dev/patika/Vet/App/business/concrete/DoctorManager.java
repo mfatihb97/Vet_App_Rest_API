@@ -40,8 +40,8 @@ public class DoctorManager implements IDoctorService {
     }
 
     @Override
-    public Doctor update(Doctor doctor) {
-        Doctor existingDoctor = doctorRepository.findById(doctor.getId()).orElseThrow();
+    public Doctor update(Doctor doctor,Long id) {
+        Doctor existingDoctor = doctorRepository.findById(id).orElseThrow();
         if (existingDoctor==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {

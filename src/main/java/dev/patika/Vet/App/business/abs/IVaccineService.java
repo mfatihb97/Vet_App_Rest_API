@@ -8,6 +8,6 @@ public interface IVaccineService {
     Vaccine getByID(Long id);
     Vaccine save(Vaccine vaccine);
     String delete(Long id);
-    Vaccine update(Vaccine vaccine);
+    Vaccine update(Vaccine vaccine,Long id);
     List<Vaccine> findAll();
 }

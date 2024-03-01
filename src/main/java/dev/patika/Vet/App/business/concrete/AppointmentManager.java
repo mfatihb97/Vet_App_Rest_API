@@ -54,8 +54,8 @@ public class AppointmentManager implements IAppointmentService {
     }
 
     @Override
-    public Appointment update(Appointment appointment) {
-        Appointment existingAppointment = appointmentRepository.findById(appointment.getId()).orElseThrow();
+    public Appointment update(Appointment appointment,Long id) {
+        Appointment existingAppointment = appointmentRepository.findById(id).orElseThrow();
         if (existingAppointment==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
