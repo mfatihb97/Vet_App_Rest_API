@@ -45,9 +45,9 @@ public class VaccinesManager implements IVaccineService {
         if (existingVaccine==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            existingVaccine.setVaccine_name(vaccines.getVaccine_name());
-            existingVaccine.setVaccine_code(vaccines.getVaccine_code());
-            return this.vaccinesRepository.save(vaccines);
+            existingVaccine.setVaccineName(vaccines.getVaccineName());
+            existingVaccine.setVaccineCode(vaccines.getVaccineCode());
+            return this.vaccinesRepository.save(existingVaccine);
         }
     }
 

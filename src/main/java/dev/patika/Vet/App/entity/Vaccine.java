@@ -22,10 +22,10 @@ public class Vaccine {
     private Long id;
 
     @Column(name = "name",nullable = false)
-    private String vaccine_name;
+    private String vaccineName;
 
     @Column(name = "code",unique = true)
-    private String vaccine_code;
+    private String vaccineCode;
 
     @OneToMany(mappedBy = "vaccine",cascade = CascadeType.PERSIST)
     @JsonIgnore

@@ -2,7 +2,10 @@ package dev.patika.Vet.App.business.concrete;
 
 import dev.patika.Vet.App.business.abs.IAnimalVaccineService;
 import dev.patika.Vet.App.dao.AnimalVaccineRepository;
+import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveMapper;
+import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveRequest;
 import dev.patika.Vet.App.entity.AnimalVaccine;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +17,13 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AnimalVaccineManager implements IAnimalVaccineService {
 
-    @Autowired
+
     private AnimalVaccineRepository animalVaccineRepository;
+
+    private AnimalVaccineSaveMapper animalVaccineSaveMapper;
 
     @Override
     public AnimalVaccine getByID(Long id) {
@@ -31,16 +37,16 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
 
 
     @Override
-    public AnimalVaccine save(AnimalVaccine animalVaccine) {
-       Long animalID = animalVaccine.getAnimal().getId();
-       Long vaccineID = animalVaccine.getVaccine().getId();
+    public AnimalVaccine save(AnimalVaccineSaveRequest animalVaccineSaveRequest) {
+       Long animalID = animalVaccineSaveRequest.animal();
+       Long vaccineID = animalVaccineSaveRequest.vaccine();
        AnimalVaccine oldVaccine = animalVaccineRepository.findByAnimalIdAndVaccineId(animalID,vaccineID);
 
-       if (oldVaccine != null && oldVaccine.getPrtEnd().isAfter(animalVaccine.getPrtStart())){
+       if (oldVaccine != null && oldVaccine.getPrtEnd().isAfter(animalVaccineSaveRequest.prtStart())){
            throw  new ResponseStatusException(HttpStatus.CONFLICT);
        }
 
-       return animalVaccineRepository.save(animalVaccine);
+       return this.animalVaccineRepository.save(animalVaccineSaveMapper.apply(animalVaccineSaveRequest));
     }
 
     @Override
@@ -54,14 +60,14 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
     }
 
     @Override
-    public AnimalVaccine update(AnimalVaccine animalVaccine,Long id) {
+    public AnimalVaccine update(AnimalVaccineSaveRequest animalVaccineSaveRequest, Long id) {
         AnimalVaccine existingAnimalVaccine = animalVaccineRepository.findById(id).orElseThrow();
         if (existingAnimalVaccine == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            existingAnimalVaccine.setPrtStart(animalVaccine.getPrtStart());
-            existingAnimalVaccine.setPrtEnd(animalVaccine.getPrtEnd());
-            return this.animalVaccineRepository.save(animalVaccine);
+            existingAnimalVaccine.setPrtStart(animalVaccineSaveRequest.prtStart());
+            existingAnimalVaccine.setPrtEnd(animalVaccineSaveRequest.prtEnd());
+            return this.animalVaccineRepository.save(existingAnimalVaccine);
         }
 
     }

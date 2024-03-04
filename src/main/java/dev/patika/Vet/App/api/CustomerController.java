@@ -51,7 +51,7 @@ public class CustomerController {
     public Customer update(
             @PathVariable("id") Long id,
             @RequestBody Customer customer){
-        return customerService.save(customer);
+        return customerService.update(customer,id);
     }
 
     @DeleteMapping("/delete/{id}")

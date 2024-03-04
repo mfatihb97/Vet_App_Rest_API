@@ -50,7 +50,7 @@ public class DoctorManager implements IDoctorService {
             existingDoctor.setAddress(doctor.getAddress());
             existingDoctor.setMail(doctor.getMail());
             existingDoctor.setPhone(doctor.getPhone());
-            return this.doctorRepository.save(doctor);
+            return this.doctorRepository.save(existingDoctor);
         }
 
     }

@@ -9,6 +9,6 @@ public interface IDoctorAvailabilityService {
     DoctorAvailability getByID(Long id);
     DoctorAvailability save(DoctorAvailability doctorAvailability);
     String delete(Long id);
-    DoctorAvailability update(DoctorAvailability doctorAvailability);
+    DoctorAvailability update(DoctorAvailability doctorAvailability,Long id);
     List<DoctorAvailability> findAll();
 }

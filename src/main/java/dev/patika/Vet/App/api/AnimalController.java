@@ -1,6 +1,7 @@
 package dev.patika.Vet.App.api;
 
 import dev.patika.Vet.App.business.abs.IAnimalService;
+import dev.patika.Vet.App.dto.ReportDto.AnimalSaveRequest;
 import dev.patika.Vet.App.entity.Animal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +29,16 @@ public class AnimalController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Animal save(@RequestBody Animal animal){
-        return this.animalService.save(animal);
+    public Animal save(@RequestBody AnimalSaveRequest animalSaveRequest){
+        return this.animalService.save(animalSaveRequest);
     }
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Animal update(
             @PathVariable("id") Long id,
-            @RequestBody Animal animal){
-        return animalService.save(animal);
+            @RequestBody AnimalSaveRequest animalSaveRequest){
+        return animalService.save(animalSaveRequest);
     }
 
     @DeleteMapping("/delete/{id}")

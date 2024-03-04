@@ -9,6 +9,6 @@ public record AnimalSaveRequest(
         String gender,
         String colour,
         LocalDate birthday,
-        Long customerId
+        Long customer
 ) {
 }

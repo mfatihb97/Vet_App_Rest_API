@@ -2,6 +2,7 @@ package dev.patika.Vet.App.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,10 +24,12 @@ public class AnimalVaccine {
     @Column(name = "id")
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Column(name = "protectionStart",nullable = false)
     private LocalDate prtStart;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Column(name = "protectionEnd",nullable = false)
     private LocalDate prtEnd;
@@ -39,7 +42,7 @@ public class AnimalVaccine {
     @JoinColumn(name = "vaccine_id",referencedColumnName = "id")
     private Vaccine vaccine;
 
-    @OneToMany(mappedBy = "animalVaccine", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "animalVaccine")
     @JsonBackReference
     private List<Report> reportList;
 }

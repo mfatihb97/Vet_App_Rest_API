@@ -2,6 +2,8 @@ package dev.patika.Vet.App.business.concrete;
 
 import dev.patika.Vet.App.business.abs.IAnimalService;
 import dev.patika.Vet.App.dao.AnimalRepository;
+import dev.patika.Vet.App.dto.ReportDto.AnimalSaveMapper;
+import dev.patika.Vet.App.dto.ReportDto.AnimalSaveRequest;
 import dev.patika.Vet.App.entity.Animal;
 import dev.patika.Vet.App.entity.AnimalVaccine;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,8 @@ public class AnimalManager implements IAnimalService {
 
     private final AnimalRepository animalRepository;
 
+    private final AnimalSaveMapper animalSaveMapper;
+
     @Override
     public Animal getByID(Long id) {
         if (this.animalRepository.findById(id) == null) {
@@ -29,8 +33,8 @@ public class AnimalManager implements IAnimalService {
     }
 
     @Override
-    public Animal save(Animal animal) {
-        return this.animalRepository.save(animal);
+    public Animal save(AnimalSaveRequest animalSaveRequest) {
+        return this.animalRepository.save(animalSaveMapper.apply(animalSaveRequest));
     }
 
     @Override
@@ -45,17 +49,17 @@ public class AnimalManager implements IAnimalService {
     }
 
     @Override
-    public Animal update(Animal animal,Long id) {
+    public Animal update(AnimalSaveRequest animalSaveRequest,Long id) {
         Animal existingAnimal = animalRepository.findById(id).orElseThrow();
         if (existingAnimal == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else{
-            existingAnimal.setBirthday(animal.getBirthday());
-            existingAnimal.setColour(animal.getColour());
-            existingAnimal.setBreed(animal.getBreed());
-            existingAnimal.setGender(animal.getGender());
-            existingAnimal.setName(animal.getName());
-            existingAnimal.setSpecies(animal.getSpecies());
+            existingAnimal.setBirthday(animalSaveRequest.birthday());
+            existingAnimal.setColour(animalSaveRequest.colour());
+            existingAnimal.setBreed(animalSaveRequest.breed());
+            existingAnimal.setGender(animalSaveRequest.gender());
+            existingAnimal.setName(animalSaveRequest.name());
+            existingAnimal.setSpecies(animalSaveRequest.species());
             return animalRepository.save(existingAnimal);
         }
 

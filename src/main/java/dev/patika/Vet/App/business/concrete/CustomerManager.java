@@ -52,7 +52,7 @@ public class CustomerManager implements ICustomerService {
             existingCustomer.setCity(customer.getCity());
             existingCustomer.setAddress(customer.getAddress());
             existingCustomer.setPhone(customer.getPhone());
-            return this.customerRepository.save(customer);
+            return this.customerRepository.save(existingCustomer);
         }
 
     }

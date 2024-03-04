@@ -32,7 +32,7 @@ public class ReportManager implements IReportService {
 
     @Override
     public Report save(ReportSaveRequest report) {
-        return this.reportSaveReqMapper.apply(report);
+        return reportRepository.save(reportSaveReqMapper.apply(report));
     }
 
     @Override

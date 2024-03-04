@@ -24,7 +24,7 @@ public class Customer {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "phone",nullable = false,unique = true)
+    @Column(name = "phone",nullable = false)
     private String phone;
 
     @Column(name = "mail",unique = true)
@@ -36,7 +36,7 @@ public class Customer {
     @Column(name = "city",nullable = false)
     private String city;
 
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Animal> animalList;
 }

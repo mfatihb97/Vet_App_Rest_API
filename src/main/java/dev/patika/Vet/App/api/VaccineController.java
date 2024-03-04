@@ -39,7 +39,7 @@ public class VaccineController {
     public Vaccine update(
             @PathVariable("id") Long id,
             @RequestBody Vaccine vaccines){
-        return vaccinesService.save(vaccines);
+        return vaccinesService.update(vaccines,id);
     }
 
     @DeleteMapping("/delete/{id}")

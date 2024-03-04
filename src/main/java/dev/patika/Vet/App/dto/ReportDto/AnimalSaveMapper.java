@@ -10,23 +10,25 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-public class AnimalSaveMapper {
+public class AnimalSaveMapper implements Function<AnimalSaveRequest,Animal> {
 
     @Autowired
     private CustomerRepository customerRepository;
 
-    public Animal saveAnimal(AnimalSaveRequest animalSaveRequest){
+    @Override
+    public Animal apply(AnimalSaveRequest animalSaveRequest){
 
         Animal newAnimal = new Animal();
 
         newAnimal.setName(animalSaveRequest.name());
         newAnimal.setSpecies(animalSaveRequest.species());
         newAnimal.setBreed(animalSaveRequest.breed());
-        newAnimal.setGender(Animal.GENDER.valueOf(animalSaveRequest.gender()));
+        newAnimal.setGender(animalSaveRequest.gender());
         newAnimal.setColour(animalSaveRequest.colour());
         newAnimal.setBirthday(animalSaveRequest.birthday());
-        newAnimal.setCustomer(customerRepository.findById(animalSaveRequest.customerId())
+        newAnimal.setCustomer(customerRepository.findById(animalSaveRequest.customer())
                 .orElseThrow());
+
         return newAnimal;
 
     }

@@ -42,13 +42,13 @@ public class DoctorAvailabilityManager implements IDoctorAvailabilityService {
     }
 
     @Override
-    public DoctorAvailability update(DoctorAvailability doctorAvailability) {
-        DoctorAvailability existingDoctorAv = doctorAvailabilityRepository.findById(doctorAvailability.getId()).orElseThrow();
+    public DoctorAvailability update(DoctorAvailability doctorAvailability,Long id) {
+        DoctorAvailability existingDoctorAv = doctorAvailabilityRepository.findById(id).orElseThrow();
         if (existingDoctorAv==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
             existingDoctorAv.setAvailableDays(doctorAvailability.getAvailableDays());
-            return this.doctorAvailabilityRepository.save(doctorAvailability);
+            return this.doctorAvailabilityRepository.save(existingDoctorAv);
         }
 
     }

@@ -32,9 +32,8 @@ public class Animal {
     @Column(name = "breed")
     private String breed;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    private GENDER gender;
+    private String gender;
 
     @Column(name = "colour")
     private String colour;
@@ -53,14 +52,10 @@ public class Animal {
     private List<Appointment> appointmentList;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "customer_id",referencedColumnName = "id")
     private Customer customer;
 
-    public enum GENDER{
-        MALE,
-        FEMALE
-    }
 
 
 }

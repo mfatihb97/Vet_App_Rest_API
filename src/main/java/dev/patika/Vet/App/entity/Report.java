@@ -38,7 +38,7 @@ public class Report {
     @JsonManagedReference
     private Appointment appointment ;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "animal_vaccine_id",referencedColumnName = "id",nullable = false)
     @JsonManagedReference
     private AnimalVaccine animalVaccine;

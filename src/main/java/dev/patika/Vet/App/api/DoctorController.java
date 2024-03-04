@@ -38,7 +38,7 @@ public class DoctorController {
     public Doctor update(
             @PathVariable("id") Long id,
             @RequestBody Doctor doctor) {
-        return doctorService.save(doctor);
+        return doctorService.update(doctor,id);
     }
 
     @DeleteMapping("/delete/{id}")

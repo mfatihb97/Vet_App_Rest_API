@@ -1,6 +1,8 @@
 package dev.patika.Vet.App.api;
 
 import dev.patika.Vet.App.business.abs.IAnimalVaccineService;
+import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveMapper;
+import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveRequest;
 import dev.patika.Vet.App.entity.AnimalVaccine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,16 +52,16 @@ public class AnimalVaccineController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public AnimalVaccine save(@RequestBody AnimalVaccine animalVaccine) {
-        return this.animalVaccineService.save(animalVaccine);
+    public AnimalVaccine save(@RequestBody AnimalVaccineSaveRequest animalVaccineSaveRequest) {
+        return this.animalVaccineService.save(animalVaccineSaveRequest);
     }
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AnimalVaccine update(
             @PathVariable("id") Long id,
-            @RequestBody AnimalVaccine animalVaccine) {
-        return animalVaccineService.save(animalVaccine);
+            @RequestBody AnimalVaccineSaveRequest animalVaccineSaveRequest) {
+        return animalVaccineService.update(animalVaccineSaveRequest,id);
     }
 
     @DeleteMapping("/delete/{id}")
