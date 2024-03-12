@@ -1,6 +1,7 @@
 package dev.patika.Vet.App.api;
 
 import dev.patika.Vet.App.business.abs.IDoctorAvailabilityService;
+import dev.patika.Vet.App.dto.ReportDto.DoctorAvDaysRequest;
 import dev.patika.Vet.App.entity.DoctorAvailability;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,16 +30,16 @@ public class DoctorAvailabilityController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public DoctorAvailability save(@RequestBody DoctorAvailability doctorAvailability) {
-        return this.doctorAvailabilityService.save(doctorAvailability);
+    public DoctorAvailability save(@RequestBody DoctorAvDaysRequest doctorAvDaysRequest) {
+        return this.doctorAvailabilityService.save(doctorAvDaysRequest);
     }
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public DoctorAvailability update(
             @PathVariable("id") Long id,
-            @RequestBody DoctorAvailability doctorAvailability) {
-        return doctorAvailabilityService.update(doctorAvailability,id);
+            @RequestBody DoctorAvDaysRequest doctorAvDaysRequest) {
+        return doctorAvailabilityService.update(doctorAvDaysRequest,id);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -1,8 +1,6 @@
 package dev.patika.Vet.App.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,16 +31,14 @@ public class Report {
     @Column(name = "price")
     private double price;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name="appointment_id",referencedColumnName = "id")
     @JsonManagedReference
     private Appointment appointment ;
 
-    @ManyToOne
-    @JoinColumn(name = "animal_vaccine_id",referencedColumnName = "id",nullable = false)
-    @JsonManagedReference
-    private AnimalVaccine animalVaccine;
-
+    @OneToMany(mappedBy = "report",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @JsonBackReference
+    private List<AnimalVaccine> animalVaccine;
 
 }
 

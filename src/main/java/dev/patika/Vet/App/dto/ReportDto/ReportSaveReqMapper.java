@@ -2,10 +2,12 @@ package dev.patika.Vet.App.dto.ReportDto;
 
 import dev.patika.Vet.App.dao.AnimalVaccineRepository;
 import dev.patika.Vet.App.dao.AppointmentRepository;
+import dev.patika.Vet.App.entity.AnimalVaccine;
 import dev.patika.Vet.App.entity.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.function.Function;
 
 
@@ -25,11 +27,8 @@ public class ReportSaveReqMapper implements Function<ReportSaveRequest,Report> {
         newReport.setTitle(reportSaveRequest.title());
         newReport.setDiagnosis(reportSaveRequest.diagnosis());
         newReport.setPrice(reportSaveRequest.price());
-        newReport.setAppointment(appointmentRepository.findById(reportSaveRequest.appointmentID())
+        newReport.setAppointment(appointmentRepository.findById(reportSaveRequest.appointment())
                 .orElseThrow());
-        newReport.setAnimalVaccine(animalVaccineRepository.findById(reportSaveRequest.animalVaccineID())
-                .orElseThrow());
-
         return newReport;
     }
 

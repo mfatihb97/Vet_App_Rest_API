@@ -34,8 +34,6 @@ public class ReportController {
         return this.reportService.save(reportSaveRequest);
     }
 
-
-
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Report update(
@@ -45,13 +43,8 @@ public class ReportController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        int result = Integer.parseInt(this.reportService.delete(id));
-        if (result > 0) {
-            return new ResponseEntity<>("Silme işlemi başarılı", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Belirtilen ID'ye sahip rapor bulunamadı", HttpStatus.NOT_FOUND);
-        }
+    public String delete(@PathVariable("id") Long id) {
+        return  this.reportService.delete(id);
     }
 
 

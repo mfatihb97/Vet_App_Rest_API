@@ -4,10 +4,12 @@ package dev.patika.Vet.App.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ManyToAny;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,13 +26,13 @@ public class AnimalVaccine {
     @Column(name = "id")
     private Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "protectionStart",nullable = false)
     private LocalDate prtStart;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "protectionEnd",nullable = false)
     private LocalDate prtEnd;
 
@@ -42,7 +44,8 @@ public class AnimalVaccine {
     @JoinColumn(name = "vaccine_id",referencedColumnName = "id")
     private Vaccine vaccine;
 
-    @OneToMany(mappedBy = "animalVaccine")
-    @JsonBackReference
-    private List<Report> reportList;
+    @ManyToOne
+    @JoinColumn(name = "report_id",referencedColumnName = "id")
+    @JsonManagedReference
+    private Report report;
 }

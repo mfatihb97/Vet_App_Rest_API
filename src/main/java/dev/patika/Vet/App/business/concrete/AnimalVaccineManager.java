@@ -1,10 +1,13 @@
 package dev.patika.Vet.App.business.concrete;
 
 import dev.patika.Vet.App.business.abs.IAnimalVaccineService;
+import dev.patika.Vet.App.dao.AnimalRepository;
 import dev.patika.Vet.App.dao.AnimalVaccineRepository;
+import dev.patika.Vet.App.dao.VaccinesRepository;
 import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveMapper;
 import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveRequest;
 import dev.patika.Vet.App.entity.AnimalVaccine;
+import dev.patika.Vet.App.entity.Vaccine;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +20,18 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class AnimalVaccineManager implements IAnimalVaccineService {
 
-
+    @Autowired
     private AnimalVaccineRepository animalVaccineRepository;
 
+    @Autowired
     private AnimalVaccineSaveMapper animalVaccineSaveMapper;
+
+    @Autowired
+    private AnimalRepository animalRepository;
+    @Autowired
+    private VaccinesRepository vaccinesRepository;
 
     @Override
     public AnimalVaccine getByID(Long id) {
@@ -67,6 +75,8 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
         }else {
             existingAnimalVaccine.setPrtStart(animalVaccineSaveRequest.prtStart());
             existingAnimalVaccine.setPrtEnd(animalVaccineSaveRequest.prtEnd());
+            existingAnimalVaccine.setAnimal(animalRepository.findById(animalVaccineSaveRequest.animal()).orElseThrow());
+            existingAnimalVaccine.setVaccine(vaccinesRepository.findById(animalVaccineSaveRequest.vaccine()).orElseThrow());
             return this.animalVaccineRepository.save(existingAnimalVaccine);
         }
 

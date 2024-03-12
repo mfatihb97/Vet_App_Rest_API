@@ -1,8 +1,12 @@
 package dev.patika.Vet.App.business.concrete;
 
 import dev.patika.Vet.App.business.abs.IAppointmentService;
+import dev.patika.Vet.App.dao.AnimalRepository;
 import dev.patika.Vet.App.dao.AppointmentRepository;
 import dev.patika.Vet.App.dao.DoctorAvailabilityRepository;
+import dev.patika.Vet.App.dao.DoctorRepository;
+import dev.patika.Vet.App.dto.ReportDto.AppointmentSaveMapper;
+import dev.patika.Vet.App.dto.ReportDto.AppointmentSaveRequest;
 import dev.patika.Vet.App.entity.Appointment;
 import dev.patika.Vet.App.entity.DoctorAvailability;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,15 @@ public class AppointmentManager implements IAppointmentService {
     private AppointmentRepository appointmentRepository;
     @Autowired
     private DoctorAvailabilityRepository doctorAvailabilityRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
+
+    @Autowired
+    private AppointmentSaveMapper animalVaccineSaveMapper;
     @Override
     public Appointment getByID(Long id) {
         if (this.appointmentRepository.findById(id)==null){
@@ -31,15 +44,15 @@ public class AppointmentManager implements IAppointmentService {
     }
 
     @Override
-    public Appointment save(Appointment appointment) {
-        LocalDateTime appointmentDate = appointment.getAppointmentDate();
-        Long doctorID = appointment.getDoctor().getId();
+    public Appointment save(AppointmentSaveRequest appointmentSaveRequest) {
+        LocalDateTime appointmentDate = appointmentSaveRequest.appointmentDate();
+        Long doctorID = appointmentSaveRequest.doctor();
         DoctorAvailability availableDate = doctorAvailabilityRepository.findByDoctorIdAndAvailableDays(doctorID,appointmentDate.toLocalDate());
 
         if (availableDate != null && isApointmentExistsOnDate(doctorID,appointmentDate)){
              throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            return this.appointmentRepository.save(appointment);
+            return this.appointmentRepository.save(animalVaccineSaveMapper.apply(appointmentSaveRequest));
         }
     }
 
@@ -54,15 +67,15 @@ public class AppointmentManager implements IAppointmentService {
     }
 
     @Override
-    public Appointment update(Appointment appointment,Long id) {
+    public Appointment update(AppointmentSaveRequest appointmentSaveRequest, Long id) {
         Appointment existingAppointment = appointmentRepository.findById(id).orElseThrow();
         if (existingAppointment==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            existingAppointment.setAppointmentDate(appointment.getAppointmentDate());
-            existingAppointment.setDoctor(appointment.getDoctor());
-            existingAppointment.setAnimal(appointment.getAnimal());
-            return this.appointmentRepository.save(appointment);
+            existingAppointment.setAppointmentDate(appointmentSaveRequest.appointmentDate());
+            existingAppointment.setDoctor(doctorRepository.findById(appointmentSaveRequest.doctor()).orElseThrow());
+            existingAppointment.setAnimal(animalRepository.findById(appointmentSaveRequest.animal()).orElseThrow());
+            return this.appointmentRepository.save(existingAppointment);
         }
 
     }

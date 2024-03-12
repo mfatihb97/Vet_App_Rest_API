@@ -24,7 +24,7 @@ public class Appointment {
     @Column(name = "id")
     private Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",shape = JsonFormat.Shape.STRING)
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "appointmentDate",nullable = false)
     private LocalDateTime appointmentDate;
@@ -38,7 +38,7 @@ public class Appointment {
     @JoinColumn(name = "doctor_id",referencedColumnName = "id",nullable = false)
     private Doctor doctor;
 
-    @OneToOne(mappedBy = "appointment", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "appointment", fetch = FetchType.LAZY)
     @JsonBackReference
     private Report report;
 

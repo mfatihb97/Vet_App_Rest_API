@@ -38,11 +38,11 @@ public class AnimalController {
     public Animal update(
             @PathVariable("id") Long id,
             @RequestBody AnimalSaveRequest animalSaveRequest){
-        return animalService.save(animalSaveRequest);
+        return animalService.update(animalSaveRequest,id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable("id") long id){
+    public String delete(@PathVariable("id") Long id){
         return this.animalService.delete(id);
     }
 

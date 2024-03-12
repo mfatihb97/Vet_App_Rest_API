@@ -25,7 +25,7 @@ public class AnimalManager implements IAnimalService {
     @Override
     public Animal getByID(Long id) {
         if (this.animalRepository.findById(id) == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Id yok");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"ID not found");
         } else {
             return this.animalRepository.findById(id).orElseThrow();
         }
@@ -54,12 +54,15 @@ public class AnimalManager implements IAnimalService {
         if (existingAnimal == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else{
-            existingAnimal.setBirthday(animalSaveRequest.birthday());
-            existingAnimal.setColour(animalSaveRequest.colour());
-            existingAnimal.setBreed(animalSaveRequest.breed());
-            existingAnimal.setGender(animalSaveRequest.gender());
-            existingAnimal.setName(animalSaveRequest.name());
-            existingAnimal.setSpecies(animalSaveRequest.species());
+            Animal updatedAnimal = animalSaveMapper.apply(animalSaveRequest);
+
+            existingAnimal.setBirthday(updatedAnimal.getBirthday());
+            existingAnimal.setColour(updatedAnimal.getColour());
+            existingAnimal.setBreed(updatedAnimal.getBreed());
+            existingAnimal.setGender(updatedAnimal.getGender());
+            existingAnimal.setName(updatedAnimal.getName());
+            existingAnimal.setSpecies(updatedAnimal.getSpecies());
+            existingAnimal.setCustomer(updatedAnimal.getCustomer());
             return animalRepository.save(existingAnimal);
         }
 

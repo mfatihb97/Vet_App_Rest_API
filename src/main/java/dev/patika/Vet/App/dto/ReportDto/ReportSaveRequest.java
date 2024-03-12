@@ -5,9 +5,7 @@ public record ReportSaveRequest(
         String diagnosis,
         double price,
 
-        Long animalVaccineID,
-
-        Long appointmentID
+        Long appointment
 ) {
 
 }

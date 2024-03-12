@@ -1,6 +1,7 @@
 package dev.patika.Vet.App.api;
 
 import dev.patika.Vet.App.business.abs.IAppointmentService;
+import dev.patika.Vet.App.dto.ReportDto.AppointmentSaveRequest;
 import dev.patika.Vet.App.entity.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -55,16 +56,16 @@ public class AppointmentController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Appointment save(@RequestBody Appointment appointment) {
-        return this.appointmentService.save(appointment);
+    public Appointment save(@RequestBody AppointmentSaveRequest appointmentSaveRequest) {
+        return this.appointmentService.save(appointmentSaveRequest);
     }
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Appointment update(
             @PathVariable("id") Long id,
-            @RequestBody Appointment appointment) {
-        return appointmentService.save(appointment);
+            @RequestBody AppointmentSaveRequest appointmentSaveRequest) {
+        return appointmentService.update(appointmentSaveRequest,id);
     }
 
     @DeleteMapping("/delete/{id}")

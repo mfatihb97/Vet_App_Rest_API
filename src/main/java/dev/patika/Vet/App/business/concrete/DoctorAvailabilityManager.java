@@ -2,6 +2,9 @@ package dev.patika.Vet.App.business.concrete;
 
 import dev.patika.Vet.App.business.abs.IDoctorAvailabilityService;
 import dev.patika.Vet.App.dao.DoctorAvailabilityRepository;
+import dev.patika.Vet.App.dao.DoctorRepository;
+import dev.patika.Vet.App.dto.ReportDto.DoctorAvDaysMapper;
+import dev.patika.Vet.App.dto.ReportDto.DoctorAvDaysRequest;
 import dev.patika.Vet.App.entity.DoctorAvailability;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,12 @@ public class DoctorAvailabilityManager implements IDoctorAvailabilityService {
     @Autowired
     private DoctorAvailabilityRepository doctorAvailabilityRepository;
 
+    @Autowired
+    private DoctorAvDaysMapper doctorAvDaysMapper;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
     @Override
     public DoctorAvailability getByID(Long id) {
 
@@ -27,8 +36,8 @@ public class DoctorAvailabilityManager implements IDoctorAvailabilityService {
     }
 
     @Override
-    public DoctorAvailability save(DoctorAvailability doctorAvailability) {
-        return this.doctorAvailabilityRepository.save(doctorAvailability);
+    public DoctorAvailability save(DoctorAvDaysRequest doctorAvDaysRequest) {
+        return this.doctorAvailabilityRepository.save(doctorAvDaysMapper.apply(doctorAvDaysRequest));
     }
 
     @Override
@@ -42,12 +51,13 @@ public class DoctorAvailabilityManager implements IDoctorAvailabilityService {
     }
 
     @Override
-    public DoctorAvailability update(DoctorAvailability doctorAvailability,Long id) {
+    public DoctorAvailability update(DoctorAvDaysRequest doctorAvDaysRequest,Long id) {
         DoctorAvailability existingDoctorAv = doctorAvailabilityRepository.findById(id).orElseThrow();
         if (existingDoctorAv==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else {
-            existingDoctorAv.setAvailableDays(doctorAvailability.getAvailableDays());
+            existingDoctorAv.setAvailableDays(doctorAvDaysRequest.availableDays());
+            existingDoctorAv.setDoctor(doctorRepository.findById(doctorAvDaysRequest.doctor()).orElseThrow());
             return this.doctorAvailabilityRepository.save(existingDoctorAv);
         }
 
