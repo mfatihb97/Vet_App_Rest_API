@@ -19,5 +19,9 @@ public interface IAppointmentService {
 
     List<Appointment> findByDoctorIdBetweenDates(LocalDateTime startDate,LocalDateTime endDate,Long animal_id);
 
+    List<Appointment> findByAppointmentDateBetweenAndDoctorName(LocalDateTime startDate,LocalDateTime endDate,String name);
+
+    List<Appointment> findByAppointmentDateBetweenAndAnimalName(LocalDateTime startDate,LocalDateTime endDate,String name);
+
 
 }

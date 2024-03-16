@@ -95,6 +95,16 @@ public class AppointmentManager implements IAppointmentService {
         return this.appointmentRepository.findByAppointmentDateBetweenAndDoctorId(startDate,endDate,doctor_id);
     }
 
+    @Override
+    public List<Appointment> findByAppointmentDateBetweenAndDoctorName(LocalDateTime startDate, LocalDateTime endDate, String name) {
+        return this.appointmentRepository.findByAppointmentDateBetweenAndDoctorName(startDate,endDate,name);
+    }
+
+    @Override
+    public List<Appointment> findByAppointmentDateBetweenAndAnimalName(LocalDateTime startDate, LocalDateTime endDate, String name) {
+        return this.appointmentRepository.findByAppointmentDateBetweenAndAnimalName(startDate,endDate,name);
+    }
+
     private boolean isApointmentExistsOnDate(Long doctorId,LocalDateTime appointmentDate){
         return  appointmentRepository.existsByDoctorIdAndAppointmentDate(doctorId,appointmentDate);
     }

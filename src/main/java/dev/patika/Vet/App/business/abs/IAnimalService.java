@@ -11,4 +11,6 @@ public interface IAnimalService {
     String delete(Long id);
     Animal update(AnimalSaveRequest animalSaveRequest,Long id);
     List<Animal> findAll();
+    Animal findByName(String name);
+    List<Animal> getByCustomerName(String name);
 }

@@ -6,6 +6,7 @@ import dev.patika.Vet.App.dao.AnimalVaccineRepository;
 import dev.patika.Vet.App.dao.VaccinesRepository;
 import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveMapper;
 import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveRequest;
+import dev.patika.Vet.App.entity.Animal;
 import dev.patika.Vet.App.entity.AnimalVaccine;
 import dev.patika.Vet.App.entity.Vaccine;
 import lombok.RequiredArgsConstructor;
@@ -100,6 +101,12 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
     @Override
     public List<AnimalVaccine> findAllByPrtStartBetween(LocalDate prt_start, LocalDate prt_end) {
         return animalVaccineRepository.findAllByPrtStartBetween(prt_start,prt_end);
+    }
+
+    @Override
+    public List<AnimalVaccine> findByAnimalName(String name) {
+        Animal animal = animalRepository.findByName(name);
+        return this.animalVaccineRepository.findByAnimal(animal);
     }
 
 

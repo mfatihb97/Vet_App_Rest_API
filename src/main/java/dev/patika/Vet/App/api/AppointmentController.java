@@ -43,7 +43,7 @@ public class AppointmentController {
         return appointmentService.findByAnimalIdBetweenDates(startDateTime,endDateTime,id);
     }
 
-    @GetMapping("/getByDoctorIdBetween")
+    @GetMapping("/getByDoctorBetween")
     @ResponseStatus(HttpStatus.OK)
     public List<Appointment> listApoByDoctorIdBetween(
             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
@@ -52,6 +52,28 @@ public class AppointmentController {
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atTime(23,59,59);
         return appointmentService.findByDoctorIdBetweenDates(startDateTime,endDateTime,id);
+    }
+
+    @GetMapping("/getByDoctorNameBetween")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Appointment> listApoByDoctorNameBetween(
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate endDate,
+            @RequestParam("doctorName") String name){
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atTime(23,59,59);
+        return appointmentService.findByAppointmentDateBetweenAndDoctorName(startDateTime,endDateTime,name);
+    }
+
+    @GetMapping("/getByAnimalNameBetween")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Appointment> listApoByAnimalNameBetween(
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate endDate,
+            @RequestParam("animalName") String name){
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atTime(23,59,59);
+        return appointmentService.findByAppointmentDateBetweenAndAnimalName(startDateTime,endDateTime,name);
     }
 
     @PostMapping("/add")

@@ -28,6 +28,15 @@ public class CustomerManager implements ICustomerService {
 
     @Override
     public Customer save(Customer customer) {
+        if(customerRepository.existsByNameAndPhoneAndMailAndAddressAndCity(
+                customer.getName(),
+                customer.getPhone(),
+                customer.getMail(),
+                customer.getAddress(),
+                customer.getCity()
+        )){
+            throw new IllegalArgumentException("This customer is already exists!");
+        }
         return this.customerRepository.save(customer);
     }
 

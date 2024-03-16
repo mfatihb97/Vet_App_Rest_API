@@ -3,6 +3,7 @@ package dev.patika.Vet.App.api;
 import dev.patika.Vet.App.business.abs.IAnimalService;
 import dev.patika.Vet.App.dto.ReportDto.AnimalSaveRequest;
 import dev.patika.Vet.App.entity.Animal;
+import dev.patika.Vet.App.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,17 @@ public class AnimalController {
         return this.animalService.getByID(id);
     }
 
+    @GetMapping("/getByName/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public Animal findByName(@PathVariable("name") String name){
+        return this.animalService.findByName(name);
+    }
+
+    @GetMapping("/getByCustomerName/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Animal> getByCustomerName(@PathVariable("name") String name){
+        return this.animalService.getByCustomerName(name);
+    }
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Animal save(@RequestBody AnimalSaveRequest animalSaveRequest){

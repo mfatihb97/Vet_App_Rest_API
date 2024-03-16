@@ -2,10 +2,12 @@ package dev.patika.Vet.App.business.concrete;
 
 import dev.patika.Vet.App.business.abs.IAnimalService;
 import dev.patika.Vet.App.dao.AnimalRepository;
+import dev.patika.Vet.App.dao.CustomerRepository;
 import dev.patika.Vet.App.dto.ReportDto.AnimalSaveMapper;
 import dev.patika.Vet.App.dto.ReportDto.AnimalSaveRequest;
 import dev.patika.Vet.App.entity.Animal;
 import dev.patika.Vet.App.entity.AnimalVaccine;
+import dev.patika.Vet.App.entity.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ public class AnimalManager implements IAnimalService {
     private final AnimalRepository animalRepository;
 
     private final AnimalSaveMapper animalSaveMapper;
+    private final CustomerRepository customerRepository;
 
     @Override
     public Animal getByID(Long id) {
@@ -33,7 +36,17 @@ public class AnimalManager implements IAnimalService {
     }
 
     @Override
-    public Animal save(AnimalSaveRequest animalSaveRequest) {
+    public Animal save(AnimalSaveRequest animalSaveRequest){
+        if(animalRepository.existsByNameAndSpeciesAndBreedAndGenderAndColourAndBirthday(
+                animalSaveRequest.name(),
+                animalSaveRequest.species(),
+                animalSaveRequest.breed(),
+                animalSaveRequest.gender(),
+                animalSaveRequest.colour(),
+                animalSaveRequest.birthday()
+        )){
+            throw new IllegalArgumentException("This animal is already exist!");
+        }
         return this.animalRepository.save(animalSaveMapper.apply(animalSaveRequest));
     }
 
@@ -71,5 +84,16 @@ public class AnimalManager implements IAnimalService {
     @Override
     public List<Animal> findAll() {
         return this.animalRepository.findAll();
+    }
+
+    @Override
+    public Animal findByName(String name) {
+        return this.animalRepository.findByName(name);
+    }
+
+    @Override
+    public List<Animal> getByCustomerName(String name) {
+        Customer customer = customerRepository.findByName(name);
+        return this.animalRepository.findByCustomer(customer);
     }
 }

@@ -26,6 +26,15 @@ public class DoctorManager implements IDoctorService {
 
     @Override
     public Doctor save(Doctor doctor) {
+        if(doctorRepository.existsByNameAndPhoneAndMailAndAddressAndCity(
+                doctor.getName(),
+                doctor.getPhone(),
+                doctor.getMail(),
+                doctor.getAddress(),
+                doctor.getCity()
+        )){
+            throw new IllegalArgumentException("This doctor is already exist!");
+        }
         return this.doctorRepository.save(doctor);
     }
 

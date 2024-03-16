@@ -3,6 +3,7 @@ package dev.patika.Vet.App.api;
 import dev.patika.Vet.App.business.abs.IAnimalVaccineService;
 import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveMapper;
 import dev.patika.Vet.App.dto.ReportDto.AnimalVaccineSaveRequest;
+import dev.patika.Vet.App.entity.Animal;
 import dev.patika.Vet.App.entity.AnimalVaccine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,6 +37,12 @@ public class AnimalVaccineController {
     @ResponseStatus(HttpStatus.OK)
     public List<AnimalVaccine> getAnimalVaccines(@PathVariable("id") Long id) {
         return animalVaccineService.findAnimalVaccineByAnimalID(id);
+    }
+
+    @GetMapping("/getByAnimalName/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AnimalVaccine> findByAnimalName(@PathVariable("name") String name){
+        return this.animalVaccineService.findByAnimalName(name);
     }
 
     @GetMapping("/getBetween")
