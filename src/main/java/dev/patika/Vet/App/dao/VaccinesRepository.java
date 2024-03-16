@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VaccinesRepository extends JpaRepository<Vaccine,Long> {
+    boolean existsByVaccineNameAndVaccineCode(String vaccineName,String vaccineCode);
 }

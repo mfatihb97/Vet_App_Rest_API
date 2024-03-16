@@ -26,7 +26,10 @@ public class VaccinesManager implements IVaccineService {
 
     @Override
     public Vaccine save(Vaccine vaccines) {
-        return this.vaccinesRepository.save(vaccines);
+       if(vaccinesRepository.existsByVaccineNameAndVaccineCode(vaccines.getVaccineName(), vaccines.getVaccineCode())){
+           throw  new IllegalArgumentException("This vaccine is already exists");
+       }
+       return  this.vaccinesRepository.save(vaccines);
     }
 
     @Override
