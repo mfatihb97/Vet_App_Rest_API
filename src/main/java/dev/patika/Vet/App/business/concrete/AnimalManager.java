@@ -9,12 +9,16 @@ import dev.patika.Vet.App.entity.Animal;
 import dev.patika.Vet.App.entity.AnimalVaccine;
 import dev.patika.Vet.App.entity.Customer;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -87,9 +91,24 @@ public class AnimalManager implements IAnimalService {
     }
 
     @Override
-    public Animal findByName(String name) {
-        return this.animalRepository.findByName(name);
+    public List<Animal> findByName(String name) {
+        List<Animal> animals = animalRepository.findAll();
+
+        String regexPattern = ".*" + name + ".*";
+        Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+
+        List<Animal> matchingAnimals = new ArrayList<>();
+
+        for (Animal animal : animals) {
+            Matcher matcher = pattern.matcher(animal.getName());
+            if (matcher.find()) {
+                matchingAnimals.add(animal);
+            }
+        }
+
+        return matchingAnimals;
     }
+
 
     @Override
     public List<Animal> getByCustomerName(String name) {

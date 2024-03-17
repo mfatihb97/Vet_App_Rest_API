@@ -30,7 +30,7 @@ public class AnimalController {
 
     @GetMapping("/getByName/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public Animal findByName(@PathVariable("name") String name){
+    public List<Animal> findByName(@PathVariable("name") String name){
         return this.animalService.findByName(name);
     }
 

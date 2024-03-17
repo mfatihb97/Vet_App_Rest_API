@@ -11,7 +11,7 @@ public interface ICustomerService {
     String delete(Long id);
     Customer update(Customer customer,Long id);
     List<Customer> findAll();
-    Customer findByName(String name);
+    List<Customer> findByName(String name);
 
     List<Animal> findAnimalByCustomerID(Long id);
 }

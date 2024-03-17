@@ -9,8 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class CustomerManager implements ICustomerService {
@@ -72,8 +75,22 @@ public class CustomerManager implements ICustomerService {
     }
 
     @Override
-    public Customer findByName(String name) {
-        return this.customerRepository.findByName(name);
+    public List<Customer> findByName(String name) {
+        List<Customer> customers = customerRepository.findAll();
+
+        String regexPattern = ".*" + name + ".*";
+        Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+
+        List<Customer> foundCustomer = new ArrayList<>();
+
+        for (Customer customer : customers) {
+            Matcher matcher = pattern.matcher(customer.getName());
+            if (matcher.find()) {
+                foundCustomer.add(customer);
+            }
+        }
+
+        return foundCustomer;
     }
 
     @Override

@@ -30,7 +30,7 @@ public class CustomerController {
 
     @GetMapping("/getByName/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public Customer findByName(@PathVariable("name") String name){
+    public List<Customer> findByName(@PathVariable("name") String name){
         return this.customerService.findByName(name);
     }
 
