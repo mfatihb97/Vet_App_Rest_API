@@ -108,7 +108,7 @@ public class AppointmentManager implements IAppointmentService {
         List<Appointment> foundAppointments = new ArrayList<>();
 
         for(Appointment appointment:appointments){
-            Matcher matcher = pattern.matcher(appointment.getAnimal().getName());
+            Matcher matcher = pattern.matcher(appointment.getDoctor().getName());
             if(matcher.find()){
                 foundAppointments.add(appointment);
             }
@@ -120,7 +120,22 @@ public class AppointmentManager implements IAppointmentService {
 
     @Override
     public List<Appointment> findByAppointmentDateBetweenAndAnimalName(LocalDateTime startDate, LocalDateTime endDate, String name) {
-        return this.appointmentRepository.findByAppointmentDateBetweenAndAnimalName(startDate,endDate,name);
+        List<Appointment> appointments = appointmentRepository.findAll();
+
+        String regexPattern = ".*" + name + ".*";
+        Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+
+        List<Appointment> foundAppointments = new ArrayList<>();
+
+        for(Appointment appointment:appointments){
+            Matcher matcher = pattern.matcher(appointment.getAnimal().getName());
+            if(matcher.find()){
+                foundAppointments.add(appointment);
+            }
+        }
+        return  foundAppointments;
+
+       // return this.appointmentRepository.findByAppointmentDateBetweenAndAnimalName(startDate,endDate,name);
     }
 
     private boolean isApointmentExistsOnDate(Long doctorId,LocalDateTime appointmentDate){
