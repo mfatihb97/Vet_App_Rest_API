@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -97,7 +100,22 @@ public class AppointmentManager implements IAppointmentService {
 
     @Override
     public List<Appointment> findByAppointmentDateBetweenAndDoctorName(LocalDateTime startDate, LocalDateTime endDate, String name) {
-        return this.appointmentRepository.findByAppointmentDateBetweenAndDoctorName(startDate,endDate,name);
+        List<Appointment> appointments = appointmentRepository.findAll();
+
+        String regexPattern = ".*" + name + ".*";
+        Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+
+        List<Appointment> foundAppointments = new ArrayList<>();
+
+        for(Appointment appointment:appointments){
+            Matcher matcher = pattern.matcher(appointment.getAnimal().getName());
+            if(matcher.find()){
+                foundAppointments.add(appointment);
+            }
+        }
+        return  foundAppointments;
+
+        //return this.appointmentRepository.findByAppointmentDateBetweenAndDoctorName(startDate,endDate,name);
     }
 
     @Override
